@@ -1,0 +1,56 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+
+<head>
+    <meta charset="UTF-8">
+    <title>Vote-app</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css" rel="stylesheet"
+        integrity="sha384-EVSTQN3/azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLASjC" crossorigin="anonymous">
+</head>
+
+<body>
+    <div id="map" style="height: 700px;"></div>
+    <script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyAsEDdb8uln4c05KtNB7JVq-FjJYrMHHVg&callback=initMap" async defer></script>
+    <script th:inline="javascript">
+        /*<![CDATA[*/
+        function showMap(element) {
+            //var latitude = element.getAttribute('latitude');
+            //var longitude = element.getAttribute('longitude');
+            const urlParams = new URLSearchParams(window.location.search);
+             const latitude = urlParams.get('latitude');
+             const longitude = urlParams.get('longitude');
+            console.log("latitude:", latitude);
+            console.log("longitude:", longitude);
+            initMap(latitude, longitude);
+        }
+       
+        function initMap(latitude, longitude) {
+			if (!isNaN(latitude) && !isNaN(longitude)) {
+            var map = new google.maps.Map(document.getElementById('map'), {
+                center: { lat: parseFloat(latitude), lng: parseFloat(longitude) },
+                zoom: 10
+            });
+
+            new google.maps.Marker({
+                position: { lat: parseFloat(latitude), lng: parseFloat(longitude) },
+                map: map,
+                title: 'Marker Title'
+            });
+                    } else {
+                  console.error('Invalid latitude or longitude values.');
+                       }
+        }
+
+        /*]]>*/
+    </script>
+    <script th:inline="javascript">
+        /*<![CDATA[*/
+        // Call showMap when the window is loaded
+        window.onload = function () {
+            showMap();
+        };
+        /*]]>*/
+    </script>
+</body>
+
+</html>

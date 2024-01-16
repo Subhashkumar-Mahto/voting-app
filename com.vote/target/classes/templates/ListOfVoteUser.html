@@ -1,0 +1,82 @@
+<!DOCTYPE html>
+<html xmnls:th="https://www.thymeleaf.org">
+
+<head>
+	<meta charset="ISO-8859-1">
+	<title>Vote-app</title>
+	<link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css" rel="stylesheet"
+		integrity="sha384-EVSTQN3/azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLASjC" crossorigin="anonymous">
+</head>
+<br>
+
+<body>
+	<div class="container">
+		<div class="row">
+			<h1>List of Voted User</h1>
+			<div class="row">
+				<div class="col-lg-3">
+					<div>
+						<table class="table table-striped table-bordered">
+							<thead class="table-dark">
+								<tr>
+									<th>User name</th>
+									<th>Email Id</th>
+									<th>Date and Time</th>
+									<th> Location</th>
+									<th>GPS Location</th>
+								</tr>
+							</thead>
+							<tbody>
+								<tr  th:each="user: ${user}">
+									<td th:text="${user.username}"></td>
+									<td th:text="${user.email}"></td>
+									<td th:text="${user.DateTime}" ></td>
+									<td th:text="${user.latitude + ' ' +user.longitude}" ></td>
+									<td >
+									
+									<a  th:href="@{/map(latitude=${user.latitude},longitude=${user.longitude})}" class="btn btn-primary" th:data-latitude="${user.latitude}" th:data-longitude="${user.longitude}" onclick="showMap(this)">
+                                            GPS
+                                        </a></td>
+								</tr>
+							</tbody>
+
+						</table>
+					</div>
+
+				</div>
+			</div>
+		</div>
+	</div>
+	
+	<!--div id="map" style="height: 600px;"></div>
+    <script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyAsEDdb8uln4c05KtNB7JVq-FjJYrMHHVg&callback=initMap" async defer></script>
+    <script th:inline="javascript">
+        /*<![CDATA[*/
+        
+        function showMap(element) {
+            var latitude = element.getAttribute('data-latitude');
+            var longitude = element.getAttribute('data-longitude');
+              console.log("latitude:", latitude);
+               console.log("longitude:", longitude);
+            initMap(latitude, longitude);
+        }
+
+        function initMap(latitude, longitude) {
+            var map = new google.maps.Map(document.getElementById('map'), {
+                center: { lat: parseFloat(latitude), lng: parseFloat(longitude) },
+                zoom: 10
+            });
+
+            new google.maps.Marker({
+                position: { lat: parseFloat(latitude), lng: parseFloat(longitude) },
+                map: map,
+                title: 'Marker Title'
+            });
+            
+        }
+        
+        /*]]>*/
+    </script>-->
+</body>
+
+</html>

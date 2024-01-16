@@ -1,0 +1,48 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Location Form</title>
+</head>
+<body>
+
+    <h1>Enter Location Details</h1>
+
+    <form id="locationForm" action="/save-location" method="post" th:object="${user}">
+        <!-- Input fields for other location details -->
+
+        <!-- Hidden fields for latitude and longitude -->
+        <input type="hidden" id="latitude" name="latitude" th:value="${user.latitude}">
+        <input type="hidden" id="longitude" name="longitude" th:value="${user.longitude}">
+
+        <!-- Button to trigger geolocation (optional) -->
+        <!--button type="button" onclick="getLocation()">Get Current Location</button>-->
+
+        <button type="submit">Save Location</button>
+    </form>
+
+    <!-- Include JavaScript for geolocation and form submission -->
+    <script>
+        function getLocationAndSubmit(event) {
+            if (navigator.geolocation) {
+                navigator.geolocation.getCurrentPosition(function(position) {
+                    document.getElementById("latitude").value = position.coords.latitude;
+                    document.getElementById("longitude").value = position.coords.longitude;
+
+                    // Proceed with the form submission
+                    document.getElementById("locationForm").submit();
+                });
+            } else {
+                alert("Geolocation is not supported by this browser.");
+                // Prevent the form submission if geolocation is not supported
+                event.preventDefault();
+            }
+        }
+
+        // Attach the getLocationAndSubmit function to the form's onsubmit event
+        document.getElementById("locationForm").onsubmit = getLocationAndSubmit;
+    </script>
+
+</body>
+</html>
